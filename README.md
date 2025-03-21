@@ -13,6 +13,7 @@ SecurePreference is a safe and easy-to-use wrapper around `SharedPreferences`, u
 - 💨 Asynchronous Operations — Works with `Flow` and `Dispatchers.IO` for high performance.
 - 💾 Batch Write and Delete — Save multiple values at once.
 - 🛠️ Flexibility — Use multiple `SecurePreference` instances with different keys.
+```
 
 ## 📦 Installation
 
@@ -20,10 +21,9 @@ Add the dependency to `build.gradle.kts`:
 
 ```kotlin
 dependencies {
-    implementation("com.github.droidbaza:securepreference:1.0.0")
+    implementation("com.github.droidbaza:securepreference:1.0.1")
 }
 ```
-
 ## 🛠 Usage
 
 ### 🔹 Initialization
