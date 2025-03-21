@@ -6,83 +6,123 @@ import kotlinx.coroutines.flow.Flow
 interface SecurePreference {
 
     /**
-     * Returns a Flow that emits key names when data is changed in the storage.
-     * Useful for observing updates in real-time.
+     * Returns a flow of all the keys stored in the preferences.
      *
-     * @return Flow emitting updated key names (add or remove values for key).
+     * @param lastTrigger - A flag that triggers the last emitted key. Default is `true`.
+     * @return Flow<String> - Flow emitting the keys.
      */
     fun keys(lastTrigger: Boolean = true): Flow<String>
 
     /**
-     * Observes changes for a specific key and emits the latest value.
+     * Retrieves the value associated with the specified key.
      *
-     * @param keyName The key to observe.
-     * @param default The default value to emit if the key is not found.
-     * @return Flow emitting the latest value associated with the key.
+     * @param keyName - The key whose value is to be retrieved.
+     * @param default - The default value to return if the key is not found.
+     * @return Flow<T?> - Flow emitting the value for the key, or `null` if not found.
+     * @param T - Supported types: Boolean, Int, String, Float, Long, Double, Set<String>, etc.
      */
     fun <T : Any> keyResult(keyName: String, default: T): Flow<T?>
 
     /**
-     * Stores a value in encrypted shared preferences.
+     * Saves a key-value pair in the preferences.
      *
-     * Supported types: Boolean, Int, String, Float, Long, Double, and Set<String>.
-     *
-     * @param key The key under which the value is stored.
-     * @param value The value to store.
+     * @param key - The key to associate with the value.
+     * @param value - The value to be stored.
+     * @param T - Supported types: Boolean, Int, String, Float, Long, Double, Set<String>, etc.
      */
     fun <T : Any> put(key: String, value: T)
 
     /**
-     * Stores multiple key-value pairs in encrypted shared preferences.
+     * Saves a key-value pair asynchronously in the preferences.
      *
-     * Supported types: Boolean, Int, String, Float, Long, Double, and Set<String>.
+     * @param key - The key to associate with the value.
+     * @param value - The value to be stored.
+     * @param T - Supported types: Boolean, Int, String, Float, Long, Double, Set<String>, etc.
+     */
+    suspend fun <T : Any> putAsync(key: String, value: T)
+
+    /**
+     * Saves multiple key-value pairs in the preferences.
      *
-     * @param pairs Key-value pairs to store.
+     * @param pairs - Vararg of pairs (key, value) to be stored.
+     * @param T - Supported types: Boolean, Int, String, Float, Long, Double, Set<String>, etc.
      */
     fun <T : Any> put(vararg pairs: Pair<String, T>)
 
     /**
-     * Retrieves a value from encrypted shared preferences.
+     * Saves multiple key-value pairs asynchronously in the preferences.
      *
-     * @param key The key to retrieve the value from.
-     * @param defaultValue The default value if the key does not exist.
-     * @return The stored value or the null value if the key is missing.
+     * @param pairs - Vararg of pairs (key, value) to be stored.
+     * @param T - Supported types: Boolean, Int, String, Float, Long, Double, Set<String>, etc.
+     */
+    suspend fun <T : Any> putAsync(vararg pairs: Pair<String, T>)
+
+    /**
+     * Retrieves the value associated with the specified key.
+     *
+     * @param key - The key whose value is to be retrieved.
+     * @param defaultValue - The default value to return if the key is not found.
+     * @return T - The value associated with the key, or the default value if not found.
+     * @param T - Supported types: Boolean, Int, String, Float, Long, Double, Set<String>, etc.
      */
     fun <T : Any> get(key: String, defaultValue: T): T
 
     /**
-     * Removes a value associated with the given key.
+     * Retrieves the value associated with the specified key asynchronously.
      *
-     * @param key The key to remove from storage.
+     * @param key - The key whose value is to be retrieved.
+     * @param defaultValue - The default value to return if the key is not found.
+     * @return T - The value associated with the key, or the default value if not found.
+     * @param T - Supported types: Boolean, Int, String, Float, Long, Double, Set<String>, etc.
+     */
+    suspend fun <T : Any> getAsync(key: String, defaultValue: T): T
+
+    /**
+     * Clears the value associated with the specified key.
+     *
+     * @param key - The key whose value is to be cleared. If `null`, all keys are cleared.
      */
     fun clear(key: String? = null)
 
     /**
-     * Removes multiple values associated with the given keys.
+     * Clears the values associated with the specified keys.
      *
-     * @param keys The keys to remove from storage.
+     * @param keys - Vararg of keys to be cleared.
      */
     fun clear(vararg keys: String)
 
     /**
-     * Removes multiple values associated with the given collection of keys.
-     * If an empty collection is provided, all stored values will be removed.
+     * Clears the values associated with the specified keys.
      *
-     * @param keys The collection of keys to remove from storage.
+     * @param keys - A collection of keys to be cleared. Defaults to an empty list.
      */
     fun clear(keys: Collection<String> = emptyList())
 
     /**
-     * Observes changes for count of records
+     * Returns a flow of the total count of stored key-value pairs.
+     *
+     * @return Flow<Int> - Flow emitting the number of stored key-value pairs.
      */
     fun count(): Flow<Int>
 
     /**
-     * Count of records
+     * Returns the total count of stored key-value pairs.
+     *
+     * @return Int - The number of stored key-value pairs.
      */
     val count: Int
 
+    /**
+     * Returns a collection of all the keys stored in the preferences.
+     *
+     * @return Collection<String> - A collection of keys.
+     */
     val keys: Collection<String>
 
+    /**
+     * Returns a map of all stored key-value pairs.
+     *
+     * @return Map<String, *> - A map of key-value pairs, where values can be of any supported type.
+     */
     val keyValues: Map<String, *>
 }

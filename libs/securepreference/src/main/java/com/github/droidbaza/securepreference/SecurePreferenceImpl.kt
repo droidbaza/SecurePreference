@@ -6,9 +6,13 @@ import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.withContext
+import kotlin.coroutines.CoroutineContext
 
 open class SecurePreferenceImpl(
     applicationContext: Context,
@@ -17,6 +21,7 @@ open class SecurePreferenceImpl(
     encryptionPaddings: String = KeyProperties.ENCRYPTION_PADDING_NONE,
     blockModes: String = KeyProperties.BLOCK_MODE_GCM,
     keySize: Int = 256,
+    private val coroutineContext: CoroutineContext = Dispatchers.IO
 ) : SecurePreference {
 
     open val sp: SharedPreferences by lazy {
@@ -55,7 +60,7 @@ open class SecurePreferenceImpl(
         awaitClose {
             sp.unregisterOnSharedPreferenceChangeListener(callback)
         }
-    }
+    }.flowOn(coroutineContext)
 
     override fun <T : Any> keyResult(keyName: String, default: T): Flow<T?> = callbackFlow {
         send(get(keyName, default))
@@ -68,7 +73,7 @@ open class SecurePreferenceImpl(
         awaitClose {
             sp.unregisterOnSharedPreferenceChangeListener(callback)
         }
-    }
+    }.flowOn(coroutineContext)
 
     override fun <T : Any> put(key: String, value: T) {
         val editor = sp.edit()
@@ -82,6 +87,12 @@ open class SecurePreferenceImpl(
             is Set<*> -> editor.putStringSet(key, value.mapNotNull { it?.toString() }.toSet())
         }
         editor.apply()
+    }
+
+    override suspend fun <T : Any> putAsync(key: String, value: T) {
+        return withContext(coroutineContext) {
+            put(key, value)
+        }
     }
 
     @Suppress("Unchecked_cast")
@@ -100,9 +111,21 @@ open class SecurePreferenceImpl(
         }
     }
 
+    override suspend fun <T : Any> getAsync(key: String, defaultValue: T): T {
+        return withContext(coroutineContext) {
+            get(key, defaultValue)
+        }
+    }
+
     override fun <T : Any> put(vararg pairs: Pair<String, T>) {
         pairs.forEach {
             put(it.first, it.second)
+        }
+    }
+
+    override suspend fun <T : Any> putAsync(vararg pairs: Pair<String, T>) {
+        withContext(coroutineContext) {
+            put(*pairs)
         }
     }
 
@@ -142,7 +165,7 @@ open class SecurePreferenceImpl(
         awaitClose {
             sp.unregisterOnSharedPreferenceChangeListener(callback)
         }
-    }
+    }.flowOn(coroutineContext)
 
     override val keys: Collection<String>
         get() = sp.all.keys
