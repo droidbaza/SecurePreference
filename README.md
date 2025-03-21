@@ -1,22 +1,22 @@
 ```markdown
-# 🔐 SecurePreference — Защищённая обёртка над SharedPreferences
+# 🔐 Secure Preference — Secure Wrapper for SharedPreferences
 
-SecurePreference — это безопасная и простая в использовании обёртка над `SharedPreferences`, которая использует `EncryptedSharedPreferences` из `androidx.security.crypto` для шифрования данных. Она предоставляет удобный API с поддержкой `Flow`, а также безопасное хранение ключей с использованием Android Keystore.
+SecurePreference is a safe and easy-to-use wrapper around `SharedPreferences`, utilizing `EncryptedSharedPreferences` from `androidx.security.crypto` for data encryption. It provides a convenient API with `Flow` support and secure key storage using the Android Keystore.
 
-## 🚀 Возможности
+## 🚀 Features
 
-- **🔑 Полное шифрование** — Все данные хранятся в `EncryptedSharedPreferences`, что предотвращает их компрометацию.
-- **📡 Поддержка Flow** — Получайте обновления данных в реальном времени.
-- **⚡ Простота использования** — Лёгкий API без сложных конфигураций.
-- **🔄 Автоматические обновления** — Отслеживание изменений данных без лишнего кода.
-- **📌 Поддержка различных типов данных** — `Boolean`, `Int`, `String`, `Float`, `Long`, `Double`, `Set<String>`.
-- **💨 Асинхронность** — Работа с `Flow` и `Dispatchers.IO` для высокой производительности.
-- **💾 Массовая запись и удаление данных** — Возможность сохранения нескольких значений за раз.
-- **🛠️ Гибкость** — Можно использовать несколько `SecurePreference`-хранилищ с разными ключами.
+- 🔑 Full Encryption — All data is stored in `EncryptedSharedPreferences`, preventing compromise.
+- 📡 Flow Support — Receive real-time data updates.
+- ⚡ Ease of Use — A lightweight API with no complex configurations.
+- 🔄 Automatic Updates — Track data changes with minimal code.
+- 📌 Support for Various Data Types — `Boolean`, `Int`, `String`, `Float`, `Long`, `Double`, `Set<String>`.
+- 💨 Asynchronous Operations — Works with `Flow` and `Dispatchers.IO` for high performance.
+- 💾 Batch Write and Delete — Save multiple values at once.
+- 🛠️ Flexibility — Use multiple `SecurePreference` instances with different keys.
 
-## 📦 Установка
+## 📦 Installation
 
-Добавьте зависимость в `build.gradle.kts`:
+Add the dependency to `build.gradle.kts`:
 
 ```kotlin
 dependencies {
@@ -24,71 +24,71 @@ dependencies {
 }
 ```
 
-## 🛠 Использование
+## 🛠 Usage
 
-### 🔹 Инициализация
+### 🔹 Initialization
 ```kotlin
 class MyApp : Application() {
     val securePrefs by SecurePrefs(this)
 }
 ```
 
-### 🔹 Сохранение данных
+### 🔹 Saving Data
 ```kotlin
 securePreference.put("user_token", "123456")
 securePreference.put("isLoggedIn", true)
 securePreference.put("settings", setOf("dark_mode", "notifications"))
 ```
 
-### 🔹 Получение данных
+### 🔹 Retrieving Data
 ```kotlin
 val token: String? = securePrefs.get("user_token")
 val isLoggedIn: Boolean = securePrefs.get("isLoggedIn", false)
 ```
 
-### 🔹 Получение данных в `Flow`
+### 🔹 Retrieving Data with `Flow`
 ```kotlin
 securePreference.keyResult("user_token", "").collect { token ->
-    println("Текущий токен: $token")
+    println("Current token: $token")
 }
 ```
 
-### 🔹 Удаление данных
+### 🔹 Deleting Data
 ```kotlin
 securePreference.clear("user_token")
 securePreference.clear("isLoggedIn", "settings")
 ```
 
-### 🔹 Отслеживание всех изменений
+### 🔹 Tracking All Changes
 ```kotlin
 securePreference.keys().collect { key ->
-    println("Изменён ключ: $key")
+    println("Key changed: $key")
 }
 ```
 
 ## 🔄 SecurePreference vs SharedPreferences vs DataStore
 
-| Функция                     | SecurePreference | SharedPreferences | DataStore |
+| Feature                     | SecurePreference | SharedPreferences | DataStore |
 |-----------------------------|------------------|-------------------|----------|
-| **Шифрование данных**       | ✅ Да             | ❌ Нет            | ✅ Да     |
-| **Поддержка Flow**          | ✅ Да             | ❌ Нет            | ✅ Да     |
-| **Работа с Keystore**       | ✅ Да             | ❌ Нет            | ❌ Нет    |
-| **Простота API**            | ✅ Да             | ✅ Да             | ❌ Нет    |
-| **Производительность**      | ⚡ Высокая        | ⚡ Высокая        | 🐢 Медленная |
-| **Поддержка сложных структур** | ❌ Нет            | ❌ Нет            | ✅ Да     |
+| Data Encryption         | ✅ Yes           | ❌ No            | ✅ Yes     |
+| Flow Support            | ✅ Yes           | ❌ No            | ✅ Yes     |
+| Keystore Integration    | ✅ Yes           | ❌ No            | ❌ No     |
+| Simple API              | ✅ Yes           | ✅ Yes           | ❌ No     |
+| Performance             | ⚡ High           | ⚡ High          | 🐢 Slow   |
+| Complex Data Structures | ❌ No            | ❌ No            | ✅ Yes     |
 
-## 🤝 Поддержка сообщества
+## 🤝 Community Support
 
-Любой вклад приветствуется! 🚀  
-Вы можете помочь проекту несколькими способами:
+Contributions are welcome! 🚀  
+You can help the project in several ways:
 
-- 📌 **Сообщить о баге** — откройте issue, если нашли проблему.
-- 🛠 **Развивать код** — присылайте PR с улучшениями.
-- ⭐ **Поставить звезду** — помогите проекту расти!
-- 📢 **Рассказать о библиотеке** — поделитесь с коллегами.
+- 📌 Report a Bug — Open an issue if you find a problem.
+- 🛠 Contribute Code — Submit PRs with improvements.
+- ⭐ Give a Star — Help the project grow!
+- 📢 Spread the Word — Share it with your colleagues.
 
-## 📝 Лицензия
+## 📝 License
 
-Этот проект распространяется под лицензией **MIT**.  
+This project is licensed under **MIT**.  
 Happy coding! 💻✨
 ```
