@@ -12,7 +12,7 @@ robolectricVersion = "4.13"
 securityCrypto = "1.1.0-alpha06"
 kotlinxCoroutines = "1.10.1"
 coreKtxVersion = "1.6.1"
-securePrefs = "1.0.1"
+securePrefs = "1.0.2"
 runner = "1.6.2"
 
 [libraries]
