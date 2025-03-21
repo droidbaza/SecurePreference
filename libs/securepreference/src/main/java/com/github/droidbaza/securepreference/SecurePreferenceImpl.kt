@@ -6,13 +6,9 @@ import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flowOn
 
 open class SecurePreferenceImpl(
     applicationContext: Context,
@@ -21,7 +17,6 @@ open class SecurePreferenceImpl(
     encryptionPaddings: String = KeyProperties.ENCRYPTION_PADDING_NONE,
     blockModes: String = KeyProperties.BLOCK_MODE_GCM,
     keySize: Int = 256,
-    private val coroutineContext: CoroutineDispatcher = Dispatchers.IO,
 ) : SecurePreference {
 
     open val sp: SharedPreferences by lazy {
@@ -60,7 +55,7 @@ open class SecurePreferenceImpl(
         awaitClose {
             sp.unregisterOnSharedPreferenceChangeListener(callback)
         }
-    }.flowOn(coroutineContext).catch {}
+    }
 
     override fun <T : Any> keyResult(keyName: String, default: T): Flow<T?> = callbackFlow {
         send(get(keyName, default))
@@ -73,7 +68,7 @@ open class SecurePreferenceImpl(
         awaitClose {
             sp.unregisterOnSharedPreferenceChangeListener(callback)
         }
-    }.flowOn(coroutineContext).catch {}
+    }
 
     override fun <T : Any> put(key: String, value: T) {
         val editor = sp.edit()
@@ -147,7 +142,7 @@ open class SecurePreferenceImpl(
         awaitClose {
             sp.unregisterOnSharedPreferenceChangeListener(callback)
         }
-    }.flowOn(coroutineContext).catch {}
+    }
 
     override val keys: Collection<String>
         get() = sp.all.keys
