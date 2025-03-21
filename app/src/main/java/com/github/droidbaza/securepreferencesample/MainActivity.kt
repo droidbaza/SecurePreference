@@ -3,45 +3,29 @@ package com.github.droidbaza.securepreferencesample
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import com.github.droidbaza.securepreference.SecurePrefs
+import com.github.droidbaza.securepreferencesample.ui.screen.SampleRoot
+import com.github.droidbaza.securepreferencesample.ui.screen.SampleViewModel
 import com.github.droidbaza.securepreferencesample.ui.theme.SecurePreferenceTheme
 
+
 class MainActivity : ComponentActivity() {
+
+    val prefs by SecurePrefs(this)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        val viewModel = SampleViewModel(prefs)
         setContent {
             SecurePreferenceTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                SampleRoot(viewModel)
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    SecurePreferenceTheme {
-        Greeting("Android")
-    }
-}
+
+
+
+
