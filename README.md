@@ -1,7 +1,9 @@
 ```markdown
 # 🔐 Secure Preference — Secure Wrapper for SharedPreferences
 
-SecurePreference is a safe and easy-to-use wrapper around `SharedPreferences`, utilizing `EncryptedSharedPreferences` from `androidx.security.crypto` for data encryption. It provides a convenient API with `Flow` support and secure key storage using the Android Keystore.
+SecurePreference is a safe and easy-to-use wrapper around `SharedPreferences`,
+utilizing `EncryptedSharedPreferences` from `androidx.security.crypto` for data encryption.
+It provides a convenient API with `Flow` support and secure key storage using the Android Keystore.
 
 ## 🚀 Features
 
