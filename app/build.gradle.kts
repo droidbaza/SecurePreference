@@ -4,9 +4,9 @@ plugins {
     alias(libs.plugins.kotlin.compose)
 }
 
-val versionMajor = 2
+val versionMajor = 1
 val versionMinor = 0
-val versionPatch = 7
+val versionPatch = 1
 val versionGeneratedCode = versionMajor * 10000 + versionMinor * 100 + versionPatch
 val versionGeneratedName = "$versionMajor.$versionMinor.$versionPatch"
 

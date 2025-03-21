@@ -55,7 +55,7 @@ interface SecurePreference {
      *
      * @param key The key to remove from storage.
      */
-    fun clear(key: String)
+    fun clear(key: String?=null)
 
     /**
      * Removes multiple values associated with the given keys.

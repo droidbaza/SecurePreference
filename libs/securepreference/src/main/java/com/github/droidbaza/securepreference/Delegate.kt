@@ -29,6 +29,3 @@ class SecurePrefs(
         return instance
     }
 }
-
-inline val Context.securePreference: SecurePreference
-    get() = SecurePreferenceImpl(this)

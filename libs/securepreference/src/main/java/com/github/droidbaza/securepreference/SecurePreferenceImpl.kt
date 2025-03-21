@@ -109,25 +109,27 @@ open class SecurePreferenceImpl(
         }
     }
 
-    override fun clear(key: String) {
-        sp.edit().remove(key).apply()
+    override fun clear(key: String?) {
+        if (key != null) {
+            sp.edit().remove(key).apply()
+        } else sp.edit().clear().apply()
     }
 
     override fun clear(vararg keys: String) {
         keys.forEach {
-            clear(it)
+            clear(key = it)
         }
         if (keys.isEmpty()) {
-            sp.edit().clear().apply()
+            clear(key = null)
         }
     }
 
     override fun clear(keys: Collection<String>) {
         keys.forEach {
-            clear(it)
+            clear(key = it)
         }
         if (keys.isEmpty()) {
-            sp.edit().clear().apply()
+            clear(key = null)
         }
     }
 
