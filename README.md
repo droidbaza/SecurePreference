@@ -12,10 +12,22 @@ It provides a convenient API with `Flow` support and secure key storage using th
 - ⚡ Ease of Use — A lightweight API with no complex configurations.
 - 🔄 Automatic Updates — Track data changes with minimal code.
 - 📌 Support for Various Data Types — `Boolean`, `Int`, `String`, `Float`, `Long`, `Double`, `Set<String>`.
-- 💨 Asynchronous Operations — Works with `Flow` and `Dispatchers.IO` for high performance.
+- 💨 Asynchronous Operations — Works with `Flow` for high performance.
 - 💾 Batch Write and Delete — Save multiple values at once.
 - 🛠️ Flexibility — Use multiple `SecurePreference` instances with different keys.
 ```
+
+## 🔄 SecurePreference vs SharedPreferences vs DataStore
+
+| Feature                     | SecurePreference | SharedPreferences | DataStore |
+|-----------------------------|------------------|-------------------|----------|
+| Data Encryption         | ✅ Yes           | ❌ No            | ✅ Yes     |
+| Flow Support            | ✅ Yes           | ❌ No            | ✅ Yes     |
+| Keystore Integration    | ✅ Yes           | ❌ No            | ❌ No     |
+| Simple API              | ✅ Yes           | ✅ Yes           | ❌ No     |
+| Performance             | ⚡ High           | ⚡ High          | 🐢 Slow   |
+| Complex Data Structures | ❌ No            | ❌ No            | ✅ Yes     |
+
 
 ## 📦 Installation
 
@@ -23,16 +35,20 @@ Add the dependency to `build.gradle.kts`:
 
 ```kotlin
 dependencies {
-    implementation("com.github.droidbaza:securepreference:1.0.2")
+    implementation("com.github.droidbaza:securepreference:$latestVersion")
 }
 ```
 ## 🛠 Usage
 
 ### 🔹 Initialization
 ```kotlin
-class MyApp : Application() {
-    val securePrefs by SecurePrefs(this)
-}
+
+   val securePrefs by SecurePrefs(this)
+   or
+   val sp:SecurePreference = SecurePreferenceImpl(context)
+   or
+   
+
 ```
 
 ### 🔹 Saving Data
@@ -68,16 +84,7 @@ securePreference.keys().collect { key ->
 }
 ```
 
-## 🔄 SecurePreference vs SharedPreferences vs DataStore
 
-| Feature                     | SecurePreference | SharedPreferences | DataStore |
-|-----------------------------|------------------|-------------------|----------|
-| Data Encryption         | ✅ Yes           | ❌ No            | ✅ Yes     |
-| Flow Support            | ✅ Yes           | ❌ No            | ✅ Yes     |
-| Keystore Integration    | ✅ Yes           | ❌ No            | ❌ No     |
-| Simple API              | ✅ Yes           | ✅ Yes           | ❌ No     |
-| Performance             | ⚡ High           | ⚡ High          | 🐢 Slow   |
-| Complex Data Structures | ❌ No            | ❌ No            | ✅ Yes     |
 
 ## 🤝 Community Support
 
