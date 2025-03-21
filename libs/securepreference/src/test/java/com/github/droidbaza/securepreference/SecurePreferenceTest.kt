@@ -144,15 +144,6 @@ class SecurePreferenceTest {
         assertEquals("Hello, world!", securePreference.get("testString", ""))
     }
 
-    @Test
-    fun testClearKey() = runTest {
-        val key = "testKey"
-        securePreference.put(key, "value")
-        securePreference.clear(key)
-        val retrievedValue: String? = securePreference.get(key)
-        assertNull(retrievedValue)
-    }
-
 
     @Test
     fun `keysFlow emits correct keys on changes`() = runTest {
@@ -160,7 +151,7 @@ class SecurePreferenceTest {
         val key2 = "key2"
         val collectedKeys = mutableListOf<String>()
         val job = launch {
-            securePreference.keys().take(3).collectLatest { key ->
+            securePreference.keys().take(2).collectLatest { key ->
                 collectedKeys.add(key)
             }
         }

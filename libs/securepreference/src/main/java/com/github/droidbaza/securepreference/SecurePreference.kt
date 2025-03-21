@@ -48,7 +48,7 @@ interface SecurePreference {
      * @param defaultValue The default value if the key does not exist.
      * @return The stored value or the default value if the key is missing.
      */
-    fun <T> get(key: String, defaultValue: T? = null): T?
+    fun <T> get(key: String, defaultValue: T): T
 
     /**
      * Removes a value associated with the given key.

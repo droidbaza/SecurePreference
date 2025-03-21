@@ -18,7 +18,6 @@ import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertNull
 
 @RunWith(AndroidJUnit4::class)
 class SecurePreferenceTest {
@@ -139,7 +138,7 @@ class SecurePreferenceTest {
         val key = "testKey"
         securePreference.put(key, "value")
         securePreference.clear(key)
-        val retrievedValue: String? = securePreference.get(key)
-        assertNull(retrievedValue)
+        val retrievedValue = securePreference.get(key,"")
+        assertEquals("", retrievedValue)
     }
 }

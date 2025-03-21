@@ -90,16 +90,16 @@ open class SecurePreferenceImpl(
     }
 
     @Suppress("Unchecked_cast")
-    override fun <T> get(key: String, defaultValue: T?): T? {
+    override fun <T> get(key: String, defaultValue: T): T {
         return when (defaultValue) {
-            is Boolean -> sp.getBoolean(key, defaultValue) as T?
-            is Int -> sp.getInt(key, defaultValue) as T?
-            is String -> sp.getString(key, defaultValue) as T?
-            is Float -> sp.getFloat(key, defaultValue) as T?
-            is Long -> sp.getLong(key, defaultValue) as T?
-            is Double -> sp.getString(key, "$defaultValue")?.toDoubleOrNull() as T?
-            is Set<*> -> sp.getStringSet(key, emptySet()) as T?
-            else -> null
+            is Boolean -> sp.getBoolean(key, defaultValue) as T
+            is Int -> sp.getInt(key, defaultValue) as T
+            is String -> sp.getString(key, defaultValue) as T
+            is Float -> sp.getFloat(key, defaultValue) as T
+            is Long -> sp.getLong(key, defaultValue as Long) as T
+            is Double -> sp.getString(key, "$defaultValue")?.toDoubleOrNull() as T
+            is Set<*> -> sp.getStringSet(key, emptySet()) as T
+            else -> throw Throwable("Current type:${defaultValue!!::class} not supported")
         }
     }
 
