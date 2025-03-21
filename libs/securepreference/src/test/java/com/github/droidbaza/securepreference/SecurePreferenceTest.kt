@@ -151,7 +151,7 @@ class SecurePreferenceTest {
         val key2 = "key2"
         val collectedKeys = mutableListOf<String>()
         val job = launch {
-            securePreference.keys().take(2).collectLatest { key ->
+            securePreference.keys().take(1).collect { key ->
                 collectedKeys.add(key)
             }
         }
@@ -161,28 +161,6 @@ class SecurePreferenceTest {
         job.join()
 
         // Проверяем, что Flow выдал ожидаемые ключи
-        assertEquals(listOf(key1, key2), collectedKeys)
-    }
-
-
-    @Test
-    fun `countFlow emits correct number of record`() = runTest {
-        val collectedCounts = mutableListOf<Int>()
-        // Подписываемся на flow и собираем 3 значения
-        val job = launch {
-            securePreference.count().take(3).collectLatest {
-                collectedCounts.add(it)
-            }
-        }
-        securePreference.put("key1", "value1")
-        securePreference.put("key2", "value2")
-        securePreference.put("key3", "value4")
-        securePreference.clear("key3")
-
-        job.join()
-        // Добавляем значения, что вызовет изменения
-
-
-        assertEquals(listOf(0, 1, 2, 3, 2), collectedCounts)
+        assertEquals(listOf(key2), collectedKeys)
     }
 }

@@ -62,7 +62,7 @@ open class SecurePreferenceImpl(
         }
     }.flowOn(coroutineContext).catch {}
 
-    override fun <T : Any> keyResult(keyName: String, default: T?): Flow<T?> = callbackFlow {
+    override fun <T : Any> keyResult(keyName: String, default: T): Flow<T?> = callbackFlow {
         send(get(keyName, default))
         val callback = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
             if (keyName == key) {
@@ -90,16 +90,18 @@ open class SecurePreferenceImpl(
     }
 
     @Suppress("Unchecked_cast")
-    override fun <T> get(key: String, defaultValue: T): T {
-        return when (defaultValue) {
-            is Boolean -> sp.getBoolean(key, defaultValue) as T
-            is Int -> sp.getInt(key, defaultValue) as T
-            is String -> sp.getString(key, defaultValue) as T
-            is Float -> sp.getFloat(key, defaultValue) as T
-            is Long -> sp.getLong(key, defaultValue as Long) as T
-            is Double -> sp.getString(key, "$defaultValue")?.toDoubleOrNull() as T
-            is Set<*> -> sp.getStringSet(key, emptySet()) as T
-            else -> throw Throwable("Current type:${defaultValue!!::class} not supported")
+    override fun <T : Any> get(key: String, defaultValue: T): T {
+        return with(sp) {
+            when (defaultValue) {
+                is Boolean -> getBoolean(key, defaultValue) as T
+                is Int -> getInt(key, defaultValue) as T
+                is String -> getString(key, defaultValue) as T
+                is Float -> getFloat(key, defaultValue) as T
+                is Long -> getLong(key, defaultValue as Long) as T
+                is Double -> getString(key, "$defaultValue")?.toDoubleOrNull() as T
+                is Set<*> -> getStringSet(key, emptySet()) as T
+                else -> throw Throwable("Current type ${defaultValue.javaClass} not supported")
+            }
         }
     }
 
@@ -134,7 +136,7 @@ open class SecurePreferenceImpl(
     }
 
     override val count: Int
-        get() = sp.all.keys.size
+        get() = keys.size
 
     override fun count(): Flow<Int> = callbackFlow {
         send(count)
@@ -146,4 +148,10 @@ open class SecurePreferenceImpl(
             sp.unregisterOnSharedPreferenceChangeListener(callback)
         }
     }.flowOn(coroutineContext).catch {}
+
+    override val keys: Collection<String>
+        get() = sp.all.keys
+
+    override val keyValues: Map<String, *>
+        get() = sp.all
 }

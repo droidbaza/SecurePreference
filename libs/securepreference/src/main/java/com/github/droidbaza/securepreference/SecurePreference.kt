@@ -20,7 +20,7 @@ interface SecurePreference {
      * @param default The default value to emit if the key is not found.
      * @return Flow emitting the latest value associated with the key.
      */
-    fun <T : Any> keyResult(keyName: String, default: T?): Flow<T?>
+    fun <T : Any> keyResult(keyName: String, default: T): Flow<T?>
 
     /**
      * Stores a value in encrypted shared preferences.
@@ -46,16 +46,16 @@ interface SecurePreference {
      *
      * @param key The key to retrieve the value from.
      * @param defaultValue The default value if the key does not exist.
-     * @return The stored value or the default value if the key is missing.
+     * @return The stored value or the null value if the key is missing.
      */
-    fun <T> get(key: String, defaultValue: T): T
+    fun <T : Any> get(key: String, defaultValue: T): T
 
     /**
      * Removes a value associated with the given key.
      *
      * @param key The key to remove from storage.
      */
-    fun clear(key: String?=null)
+    fun clear(key: String? = null)
 
     /**
      * Removes multiple values associated with the given keys.
@@ -81,4 +81,8 @@ interface SecurePreference {
      * Count of records
      */
     val count: Int
+
+    val keys: Collection<String>
+
+    val keyValues: Map<String, *>
 }

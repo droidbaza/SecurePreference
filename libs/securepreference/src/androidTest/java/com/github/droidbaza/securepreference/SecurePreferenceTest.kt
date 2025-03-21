@@ -104,11 +104,11 @@ class SecurePreferenceTest {
                 savedValue = it
             }
         }
-        joinAll(job1,job2)
+        joinAll(job1, job2)
 
-        assertEquals(value, retrievedValue,"start")
-        assertEquals(key, savedKey,"from key")
-        assertEquals(value, savedValue,"from flow")
+        assertEquals(value, retrievedValue, "start")
+        assertEquals(key, savedKey, "from key")
+        assertEquals(value, savedValue, "from flow")
     }
 
     @Test
@@ -138,7 +138,7 @@ class SecurePreferenceTest {
         val key = "testKey"
         securePreference.put(key, "value")
         securePreference.clear(key)
-        val retrievedValue = securePreference.get(key,"")
+        val retrievedValue = securePreference.get(key, "")
         assertEquals("", retrievedValue)
     }
 }

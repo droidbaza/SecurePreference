@@ -23,7 +23,7 @@ Add the dependency to `build.gradle.kts`:
 
 ```kotlin
 dependencies {
-    implementation("com.github.droidbaza:securepreference:1.0.1")
+    implementation("com.github.droidbaza:securepreference:1.0.2")
 }
 ```
 ## 🛠 Usage
@@ -44,8 +44,8 @@ securePreference.put("settings", setOf("dark_mode", "notifications"))
 
 ### 🔹 Retrieving Data
 ```kotlin
-val token: String? = securePrefs.get("user_token")
-val isLoggedIn: Boolean = securePrefs.get("isLoggedIn", false)
+val token = securePrefs.get("user_token","")
+val isLoggedIn = securePrefs.get("isLoggedIn", false)
 ```
 
 ### 🔹 Retrieving Data with `Flow`
