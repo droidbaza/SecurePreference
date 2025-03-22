@@ -12,7 +12,7 @@ It provides a convenient API with `Flow` support and secure key storage using th
 - ⚡ Ease of Use — A lightweight API with no complex configurations.
 - 🔄 Automatic Updates — Track data changes with minimal code.
 - 📌 Support for Various Data Types — `Boolean`, `Int`, `String`, `Float`,
- `Long`, `Double`, `Set<String>`, `Serialazible` and `Parcelable`.
+ `Long`, `Double`, `Set<String>`, `Serializible` and `Parcelable`.
 - 💨 Asynchronous Operations — Works with `Flow` for high performance.
 - 💾 Batch Write and Delete — Save multiple values at once.
 - 🛠️ Flexibility — Use multiple `SecurePreference` instances with different keys.
