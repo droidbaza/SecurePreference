@@ -22,12 +22,12 @@ It provides a convenient API with `Flow` support and secure key storage using th
 
 | Feature                     | SecurePreference | SharedPreferences | DataStore |
 |-----------------------------|------------------|-------------------|----------|
-| Data Encryption         | ✅ Yes           | ❌ No            | ✅ Yes     |
-| Flow Support            | ✅ Yes           | ❌ No            | ✅ Yes     |
-| Keystore Integration    | ✅ Yes           | ❌ No            | ❌ No     |
-| Simple API              | ✅ Yes           | ✅ Yes           | ❌ No     |
-| Performance             | ⚡ High           | ⚡ High          | 🐢 Slow   |
-| Complex Data Structures | ✅ Yes            | ❌ No            | ✅ Yes     |
+| built-in Data Encryption    | ✅ Yes           | ❌ No              | ❌ No     |
+| Flow Support                | ✅ Yes           | ❌ No              | ✅ Yes     |
+| Keystore Integration        | ✅ Yes           | ❌ No              | ❌ No     |
+| Simple API                  | ✅ Yes           | ✅ Yes             | ❌ No     |
+| Performance                 | ⚡ High           | ⚡ High            | 🐢 Slow   |
+| Complex Data Structures     | ✅ Yes           | ❌ No              | ✅ Yes     |
 
 
 ## 📦 Installation
