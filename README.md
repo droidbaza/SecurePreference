@@ -11,7 +11,8 @@ It provides a convenient API with `Flow` support and secure key storage using th
 - 📡 Flow Support — Receive real-time data updates.
 - ⚡ Ease of Use — A lightweight API with no complex configurations.
 - 🔄 Automatic Updates — Track data changes with minimal code.
-- 📌 Support for Various Data Types — `Boolean`, `Int`, `String`, `Float`, `Long`, `Double`, `Set<String>`.
+- 📌 Support for Various Data Types — `Boolean`, `Int`, `String`, `Float`,
+ `Long`, `Double`, `Set<String>` 'Serialazible' и 'Parcelable'.
 - 💨 Asynchronous Operations — Works with `Flow` for high performance.
 - 💾 Batch Write and Delete — Save multiple values at once.
 - 🛠️ Flexibility — Use multiple `SecurePreference` instances with different keys.
@@ -26,7 +27,7 @@ It provides a convenient API with `Flow` support and secure key storage using th
 | Keystore Integration    | ✅ Yes           | ❌ No            | ❌ No     |
 | Simple API              | ✅ Yes           | ✅ Yes           | ❌ No     |
 | Performance             | ⚡ High           | ⚡ High          | 🐢 Slow   |
-| Complex Data Structures | ❌ No            | ❌ No            | ✅ Yes     |
+| Complex Data Structures | ✅ Yes            | ❌ No            | ✅ Yes     |
 
 
 ## 📦 Installation
