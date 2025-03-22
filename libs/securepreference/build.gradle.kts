@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.maven.publish)
+    kotlin("plugin.serialization") version "2.1.0"
+    id("kotlin-parcelize")
 }
 
 android {
@@ -37,7 +39,9 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.core.ktx)
     implementation(libs.core.ktx)
-    api(libs.androidx.security.crypto)
+    implementation(libs.androidx.security.crypto)
+    implementation(libs.kotlinx.serialization.json)
+
     testImplementation(libs.junit)
 
     androidTestImplementation(libs.androidx.junit)

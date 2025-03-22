@@ -2,19 +2,21 @@ package com.github.droidbaza.securepreference
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.os.Parcelable
+import androidx.test.core.app.ApplicationProvider
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.take
+import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import androidx.test.core.app.ApplicationProvider
-import kotlinx.coroutines.joinAll
+import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
@@ -22,8 +24,13 @@ import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertNull
-import kotlin.to
+
+@Serializable
+data class User(val name: String, val age: Int)
+
+@Parcelize
+data class UserParcel(val name: String, val age: Int) : Parcelable
+
 
 @RunWith(RobolectricTestRunner::class)
 @Config(manifest = Config.NONE, sdk = [22, 28])
@@ -38,8 +45,9 @@ class SecurePreferenceTest {
     fun setUp() {
         Dispatchers.setMain(testDispatcher)
         context = ApplicationProvider.getApplicationContext()
-        securePreference = object :SecurePreferenceImpl(context){
-            override val sp: SharedPreferences = context.getSharedPreferences("name", Context.MODE_PRIVATE)
+        securePreference = object : SecurePreferenceImpl(context) {
+            override val sp: SharedPreferences =
+                context.getSharedPreferences("name", Context.MODE_PRIVATE)
         }
     }
 
@@ -73,7 +81,7 @@ class SecurePreferenceTest {
         val key = "testString"
         val value = "Hello, world!"
         securePreference.put(key, value)
-        val retrievedValue = securePreference.get(key,"")
+        val retrievedValue = securePreference.get(key, "")
         assertEquals(value, retrievedValue)
     }
 
@@ -115,11 +123,11 @@ class SecurePreferenceTest {
                 savedValue = it
             }
         }
-        joinAll(job1,job2)
+        joinAll(job1, job2)
 
-        assertEquals(value, retrievedValue,"start")
-        assertEquals(key, savedKey,"from key")
-        assertEquals(value, savedValue,"from flow")
+        assertEquals(value, retrievedValue, "start")
+        assertEquals(key, savedKey, "from key")
+        assertEquals(value, savedValue, "from flow")
     }
 
     @Test
@@ -142,6 +150,33 @@ class SecurePreferenceTest {
         assertEquals(true, securePreference.get("testBoolean", false))
         assertEquals(123, securePreference.get("testInt", 0))
         assertEquals("Hello, world!", securePreference.get("testString", ""))
+    }
+
+
+    @Test
+    fun testPutAndGetJsonObject() = runTest {
+
+
+        val key = "testUser"
+        val user = User("Иван", 30)
+
+        securePreference.put(key, user)
+        val retrievedUser = securePreference.get(key, User("", 0))
+
+        assertEquals(user, retrievedUser)
+    }
+
+    @Test
+    fun testPutAndGetParcelObject() = runTest {
+
+
+        val key = "testUserParcel"
+        val user = UserParcel("Иван", 30)
+
+        securePreference.put(key, user)
+        val retrievedUser = securePreference.get(key, UserParcel("", 0))
+
+        assertEquals(user, retrievedUser)
     }
 
 

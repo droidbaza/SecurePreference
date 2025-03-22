@@ -1,7 +1,11 @@
 package com.github.droidbaza.securepreference
 
 import kotlinx.coroutines.flow.Flow
-
+import kotlinx.serialization.InternalSerializationApi
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.serializer
+import kotlin.reflect.KClass
 
 interface SecurePreference {
 
@@ -28,7 +32,7 @@ interface SecurePreference {
      *
      * @param key - The key to associate with the value.
      * @param value - The value to be stored.
-     * @param T - Supported types: Boolean, Int, String, Float, Long, Double, Set<String>, etc.
+     * @param T - Supported types: Boolean, Int, String, Float, Long, Double, Set<String>,Parcellable,Serialazible etc.
      */
     fun <T : Any> put(key: String, value: T)
 
