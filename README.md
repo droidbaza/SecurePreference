@@ -9,7 +9,9 @@ It provides a convenient API with `Flow` support and secure key storage using th
 
 Please be aware that the **Jetpack Security Crypto** library (`androidx.security:security-crypto`) is deprecated and 
 no longer actively maintained. 
-[Refs](https://developer.android.com/privacy-and-security/cryptography#jetpack_security_crypto_library)
+[Refs](https://developer.android.com/privacy-and-security/cryptography#jetpack_security_crypto_library),
+[Issue](https://issuetracker.google.com/issues/176215143),
+[Post](https://x.com/Sp4ghettiCode/status/1786033489675944311)
 
 ### Recommendation:
 It is strongly recommended to migrate to alternative,
