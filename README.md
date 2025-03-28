@@ -67,9 +67,7 @@ dependencies {
    val securePrefs by SecurePrefs(this)
    or
    val sp:SecurePreference = SecurePreferenceImpl(context)
-   or
    
-
 ```
 
 ### 🔹 Saving Data
@@ -110,12 +108,6 @@ securePreference.keys().collect { key ->
 ## 🤝 Community Support
 
 Contributions are welcome! 🚀  
-You can help the project in several ways:
-
-- 📌 Report a Bug — Open an issue if you find a problem.
-- 🛠 Contribute Code — Submit PRs with improvements.
-- ⭐ Give a Star — Help the project grow!
-- 📢 Spread the Word — Share it with your colleagues.
 
 ## 📝 License
 
