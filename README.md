@@ -1,8 +1,27 @@
+
 # 🔐 Secure Preference — Secure Wrapper for SharedPreferences
 
 SecurePreference is a safe and easy-to-use wrapper around `SharedPreferences`,
 utilizing `EncryptedSharedPreferences` from `androidx.security.crypto` for data encryption.
 It provides a convenient API with `Flow` support and secure key storage using the Android Keystore.
+
+⚠️ ⚠️ ⚠️ Warning: Jetpack Security Crypto Library Deprecated ⚠️ ⚠️ ⚠️ 
+
+Please be aware that the **Jetpack Security Crypto** library (`androidx.security:security-crypto`) is deprecated and 
+no longer actively maintained. 
+[Refs](https://developer.android.com/privacy-and-security/cryptography#jetpack_security_crypto_library)
+
+### Recommendation:
+It is strongly recommended to migrate to alternative,
+ actively maintained cryptographic libraries
+for secure key management and encryption. 
+Options such as the **Android Keystore system** and other
+ third-party libraries provide more robust and secure solutions.
+
+For more details on the deprecation, please refer to the official [Jetpack Security documentation](https://developer.android.com/jetpack/androidx/releases/security) and consider exploring alternative approaches 
+for cryptography in your app.
+
+By using deprecated libraries, you risk the security and stability of your application. 
 
 ## 🚀 Features
 
