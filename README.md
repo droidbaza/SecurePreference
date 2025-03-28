@@ -1,4 +1,3 @@
-```markdown
 # 🔐 Secure Preference — Secure Wrapper for SharedPreferences
 
 SecurePreference is a safe and easy-to-use wrapper around `SharedPreferences`,
@@ -101,4 +100,3 @@ You can help the project in several ways:
 
 This project is licensed under **MIT**.  
 Happy coding! 💻✨
-```
